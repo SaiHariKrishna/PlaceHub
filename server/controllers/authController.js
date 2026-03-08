@@ -8,9 +8,9 @@ const { sendOTPEmail } = require('../config/email');
 // Secure cookie options
 const cookieOptions = {
   httpOnly: true,
-  secure: true,        // required for HTTPS
-  sameSite: "none",    // required for cross-domain cookies
-  maxAge: 7 * 24 * 60 * 60 * 1000,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 };
 
 // POST /api/auth/register — Register a new student
