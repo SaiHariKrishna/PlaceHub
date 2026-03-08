@@ -9,11 +9,7 @@ This project was built as part of an academic project to simulate a real-world c
 
 ## Live Demo
 
-Frontend
 https://placehub.me
-
-Backend API
-https://placehub-backend-3ft5.onrender.com
 
 ---
 
