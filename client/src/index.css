@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: 16px;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800 antialiased min-h-screen;
+  font-size: clamp(16px, 1.1vw, 18px);
+  line-height: 1.6;
+}
+
+h1 { font-size: 36px; font-weight: 700; }
+h2 { font-size: 28px; font-weight: 600; }
+h3 { font-size: 22px; font-weight: 600; }
+p  { font-size: 16px; }
+
+@layer components {
+  .card {
+    @apply bg-white rounded-2xl border border-slate-200 shadow-sm;
+    padding: 24px;
+  }
+  .card-hover {
+    @apply bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200;
+    padding: 24px;
+  }
+  .input {
+    @apply bg-white border border-slate-300 text-slate-800 placeholder-slate-400 rounded-lg px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors;
+  }
+  .btn-primary {
+    @apply px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm;
+  }
+  .btn-secondary {
+    @apply px-6 py-2.5 bg-white text-slate-700 font-medium rounded-lg hover:bg-slate-50 border border-slate-300 transition-all duration-200;
+  }
+  .stat-number {
+    font-size: 36px;
+    font-weight: 700;
+  }
+  .job-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .job-card p {
+    font-size: 15px;
+  }
+}
