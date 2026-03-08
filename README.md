@@ -148,7 +148,7 @@ Resend email API
 ### Clone the Repository
 
 ```
-git clone https://github.com/your-username/placehub.git
+git clone https://github.com/SaiHariKrishna/PlaceHub
 cd placehub
 ```
 
@@ -250,7 +250,7 @@ CLIENT_URL=https://placehub.me
 
 ## Author
 
-Sai Hari Krishna
+Konda Venkata Sai Hari Krishna
 Computer Science Engineering Student
 
 ---
