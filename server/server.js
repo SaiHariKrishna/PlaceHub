@@ -38,6 +38,7 @@ app.use(
 
 const allowedOrigins = [
   'http://localhost:5173',
+  'https://place-hub-woxsen.vercel.app',
   process.env.CLIENT_URL,
 ].filter(Boolean);
 
