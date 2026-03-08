@@ -6,12 +6,12 @@ const User = require('../models/User');
 const { sendOTPEmail } = require('../config/email');
 
 // Secure cookie options
-// In production (cross-domain: Vercel→Render), cookies need secure + sameSite=none
-const isProduction = process.env.NODE_ENV === 'production';
+// Cross-domain deployment (Vercel → Render) requires secure + sameSite=none
+// Modern browsers allow secure cookies on localhost, so this works in dev too
 const cookieOptions = {
   httpOnly: true,
   secure: true,
-  sameSite: isProduction ? 'none' : 'lax',
+  sameSite: 'none',
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 };
 

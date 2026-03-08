@@ -17,6 +17,12 @@ const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
+// ─── Validate Required Env Vars ─────────────────────
+if (!process.env.JWT_SECRET) {
+  console.error('FATAL: JWT_SECRET is not set in environment variables');
+  process.exit(1);
+}
+
 // Trust first proxy (needed for rate limiting behind reverse proxies like Render)
 app.set('trust proxy', 1);
 
