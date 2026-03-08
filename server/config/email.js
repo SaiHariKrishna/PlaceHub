@@ -1,18 +1,13 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-// Create reusable transporter using Gmail SMTP
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const FROM_EMAIL = process.env.FROM_EMAIL || 'PlaceHub <onboarding@resend.dev>';
 
 // Send OTP email to user
 const sendOTPEmail = async (email, otp) => {
-  const mailOptions = {
-    from: `"PlaceHub" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: FROM_EMAIL,
     to: email,
     subject: 'PlaceHub - Email Verification OTP',
     html: `
@@ -25,9 +20,7 @@ const sendOTPEmail = async (email, otp) => {
         <p style="color: #94a3b8; font-size: 13px;">If you did not request this, please ignore this email.</p>
       </div>
     `,
-  };
-
-  await transporter.sendMail(mailOptions);
+  });
 };
 
 // Send status-update email when admin changes application status
@@ -39,8 +32,8 @@ const sendStatusEmail = async (email, studentName, jobTitle, company, status) =>
     Selected: '#22c55e',
   };
 
-  const mailOptions = {
-    from: `"PlaceHub" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: FROM_EMAIL,
     to: email,
     subject: `PlaceHub - Application Status Updated: ${status}`,
     html: `
@@ -54,9 +47,7 @@ const sendStatusEmail = async (email, studentName, jobTitle, company, status) =>
         <p style="color: #94a3b8; font-size: 13px;">Log in to PlaceHub for more details.</p>
       </div>
     `,
-  };
-
-  await transporter.sendMail(mailOptions);
+  });
 };
 
 module.exports = { sendOTPEmail, sendStatusEmail };
