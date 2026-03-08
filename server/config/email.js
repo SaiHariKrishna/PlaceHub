@@ -2,7 +2,7 @@ const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM_EMAIL = process.env.FROM_EMAIL || 'PlaceHub <onboarding@resend.dev>';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'PlaceHub <noreply@placehub.me>';
 
 // Send OTP email to user
 const sendOTPEmail = async (email, otp) => {
