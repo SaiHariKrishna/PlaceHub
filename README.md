@@ -19,7 +19,7 @@ https://placehub-backend-3ft5.onrender.com
 
 ## Overview
 
-PlaceHub connects students with placement opportunities in a structured way.
+PlaceHub connects students with placement opportunities in a structured way..
 
 Students can:
 
