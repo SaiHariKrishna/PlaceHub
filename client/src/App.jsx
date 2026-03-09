@@ -8,6 +8,9 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import VerifyOTP from './pages/VerifyOTP';
+import ForgotPassword from './pages/ForgotPassword';
+import VerifyResetOTP from './pages/VerifyResetOTP';
+import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Jobs from './pages/Jobs';
@@ -20,6 +23,9 @@ import JobForm from './pages/admin/JobForm';
 import ViewApplicants from './pages/admin/ViewApplicants';
 import AllApplicants from './pages/admin/AllApplicants';
 import ChangePassword from './pages/admin/ChangePassword';
+import AdminForgotPassword from './pages/admin/AdminForgotPassword';
+import AdminVerifyOTP from './pages/admin/AdminVerifyOTP';
+import AdminResetPassword from './pages/admin/AdminResetPassword';
 import { useAuth } from './context/AuthContext';
 
 function App() {
@@ -40,6 +46,12 @@ function App() {
       <Route path="/login" element={<><Navbar /><Login /><Footer /></>} />
       <Route path="/register" element={<><Navbar /><Register /><Footer /></>} />
       <Route path="/verify-otp" element={<><Navbar /><VerifyOTP /><Footer /></>} />
+      <Route path="/forgot-password" element={<><Navbar /><ForgotPassword /><Footer /></>} />
+      <Route path="/verify-reset-otp" element={<><Navbar /><VerifyResetOTP /><Footer /></>} />
+      <Route path="/reset-password" element={<><Navbar /><ResetPassword /><Footer /></>} />
+      <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
+      <Route path="/admin/verify-reset-otp" element={<AdminVerifyOTP />} />
+      <Route path="/admin/reset-password" element={<AdminResetPassword />} />
 
       {/* Protected student routes with sidebar layout */}
       <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout><Dashboard /></DashboardLayout></ProtectedRoute>} />

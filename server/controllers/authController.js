@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { validationResult } = require('express-validator');
 const User = require('../models/User');
-const { sendOTPEmail } = require('../config/email');
+const { sendOTPEmail, sendPasswordResetOTP } = require('../config/email');
 
 // Secure cookie options
 // Cross-domain deployment (Vercel → Render) requires secure + sameSite=none
@@ -169,4 +169,126 @@ exports.logout = (req, res) => {
 // GET /api/auth/me — Get currently authenticated user
 exports.getMe = async (req, res) => {
   res.json({ user: req.user });
+};
+
+// Hard-coded admin email target for password reset OTPs
+const ADMIN_RESET_EMAIL = 'kvsaiharikrishna123@gmail.com';
+
+// POST /api/auth/forgot-password — Send password-reset OTP
+exports.forgotPassword = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array()[0].msg });
+    }
+
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'No account found with this email' });
+    }
+    if (!user.isVerified) {
+      return res.status(400).json({ message: 'Please verify your email first' });
+    }
+
+    // Generate 6-digit OTP
+    const otp = crypto.randomInt(100000, 999999).toString();
+    const otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
+
+    user.resetOTP = otp;
+    user.resetOTPExpiry = otpExpiry;
+    await user.save();
+
+    // Admin OTP always goes to the designated Gmail
+    const targetEmail = user.role === 'admin' ? ADMIN_RESET_EMAIL : email;
+
+    try {
+      await sendPasswordResetOTP(targetEmail, otp);
+    } catch (err) {
+      console.error('Password reset email failed:', err);
+      return res.status(500).json({ message: 'Failed to send OTP email. Please try again.' });
+    }
+
+    // For admin, return masked email so frontend can display it
+    let maskedEmail;
+    if (user.role === 'admin') {
+      const [local, domain] = ADMIN_RESET_EMAIL.split('@');
+      maskedEmail = local.slice(0, 3) + '*'.repeat(local.length - 3) + '@' + domain;
+    }
+
+    res.json({
+      message: 'Password reset OTP sent',
+      ...(maskedEmail && { maskedEmail }),
+    });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// POST /api/auth/verify-reset-otp — Validate reset OTP
+exports.verifyResetOTP = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array()[0].msg });
+    }
+
+    const { email, otp } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    if (!user.resetOTP || !user.resetOTPExpiry || user.resetOTPExpiry < new Date()) {
+      return res.status(400).json({ message: 'OTP has expired. Please request a new one.' });
+    }
+
+    if (user.resetOTP !== otp) {
+      return res.status(400).json({ message: 'Invalid OTP' });
+    }
+
+    res.json({ message: 'OTP verified successfully' });
+  } catch (error) {
+    console.error('Verify reset OTP error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// POST /api/auth/reset-password — Set new password after OTP verification
+exports.resetPassword = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array()[0].msg });
+    }
+
+    const { email, otp, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    // Re-verify OTP (single-use guard)
+    if (!user.resetOTP || !user.resetOTPExpiry || user.resetOTPExpiry < new Date()) {
+      return res.status(400).json({ message: 'OTP has expired. Please request a new one.' });
+    }
+    if (user.resetOTP !== otp) {
+      return res.status(400).json({ message: 'Invalid OTP' });
+    }
+
+    // Hash and save new password
+    user.password = await bcrypt.hash(password, 12);
+    user.resetOTP = undefined;
+    user.resetOTPExpiry = undefined;
+    await user.save();
+
+    res.json({ message: 'Password reset successfully. You can now login.' });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
 };

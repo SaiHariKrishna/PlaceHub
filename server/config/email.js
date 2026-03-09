@@ -50,4 +50,23 @@ const sendStatusEmail = async (email, studentName, jobTitle, company, status) =>
   });
 };
 
-module.exports = { sendOTPEmail, sendStatusEmail };
+// Send password-reset OTP email
+const sendPasswordResetOTP = async (email, otp) => {
+  await resend.emails.send({
+    from: FROM_EMAIL,
+    to: email,
+    subject: 'PlaceHub - Password Reset OTP',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px; border: 1px solid #e2e8f0; border-radius: 12px;">
+        <h2 style="color: #0f172a; margin-bottom: 8px;">Reset Your Password</h2>
+        <p style="color: #64748b;">Use the OTP below to reset your PlaceHub account password. This code expires in 5 minutes.</p>
+        <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; text-align: center; margin: 24px 0;">
+          <span style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #2563eb;">${otp}</span>
+        </div>
+        <p style="color: #94a3b8; font-size: 13px;">If you did not request this, please ignore this email.</p>
+      </div>
+    `,
+  });
+};
+
+module.exports = { sendOTPEmail, sendStatusEmail, sendPasswordResetOTP };

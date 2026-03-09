@@ -73,10 +73,45 @@ const jobValidator = [
     .withMessage('At least one skill is required'),
 ];
 
+// Validate forgot password input
+const forgotPasswordValidator = [
+  body('email').trim().isEmail().withMessage('Valid email is required'),
+];
+
+// Validate reset-password OTP input
+const resetOtpValidator = [
+  body('email').trim().isEmail().withMessage('Valid email is required'),
+  body('otp')
+    .trim()
+    .isLength({ min: 6, max: 6 })
+    .withMessage('OTP must be 6 digits'),
+];
+
+// Validate reset password input
+const resetPasswordValidator = [
+  body('email').trim().isEmail().withMessage('Valid email is required'),
+  body('otp')
+    .trim()
+    .isLength({ min: 6, max: 6 })
+    .withMessage('OTP must be 6 digits'),
+  body('password')
+    .isLength({ min: 8 })
+    .withMessage('Password must be at least 8 characters')
+    .matches(/[A-Z]/)
+    .withMessage('Password must contain an uppercase letter')
+    .matches(/[a-z]/)
+    .withMessage('Password must contain a lowercase letter')
+    .matches(/[0-9]/)
+    .withMessage('Password must contain a number'),
+];
+
 module.exports = {
   registerValidator,
   loginValidator,
   otpValidator,
   profileValidator,
   jobValidator,
+  forgotPasswordValidator,
+  resetOtpValidator,
+  resetPasswordValidator,
 };

@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema(
     isVerified: { type: Boolean, default: false },
     otp: { type: String },
     otpExpiry: { type: Date },
+    resetOTP: { type: String },
+    resetOTPExpiry: { type: Date },
     // Student profile fields
     age: { type: Number },
     branch: { type: String, trim: true },
