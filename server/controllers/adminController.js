@@ -3,6 +3,45 @@ const User = require('../models/User');
 const Application = require('../models/Application');
 const { sendStatusEmail } = require('../config/email');
 
+// GET /api/admin/students — Get all students with their applications
+exports.getAllStudents = async (req, res) => {
+  try {
+    const students = await User.find({ role: 'student' })
+      .select('name email branch cgpa skills')
+      .lean();
+
+    const studentIds = students.map((s) => s._id);
+
+    const applications = await Application.find({ student: { $in: studentIds } })
+      .populate('job', 'title company')
+      .lean();
+
+    const appMap = {};
+    for (const app of applications) {
+      const sid = app.student.toString();
+      if (!appMap[sid]) appMap[sid] = [];
+      if (app.job) {
+        appMap[sid].push({ jobTitle: app.job.title, company: app.job.company });
+      }
+    }
+
+    const result = students.map((s) => ({
+      _id: s._id,
+      name: s.name,
+      email: s.email,
+      branch: s.branch || 'N/A',
+      cgpa: s.cgpa ?? 'N/A',
+      skills: s.skills || [],
+      applications: appMap[s._id.toString()] || [],
+    }));
+
+    res.json({ students: result });
+  } catch (error) {
+    console.error('Get students error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 // PUT /api/admin/change-password — Admin changes their own password
 exports.changePassword = async (req, res) => {
   try {

@@ -98,7 +98,7 @@ export default function AdminDashboard() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+        <Link to="/admin/students" className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
               <HiOutlineUsers size={20} />
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
               <p className="text-xs text-slate-500">Students</p>
             </div>
           </div>
-        </div>
+        </Link>
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-green-50 text-green-600 rounded-xl flex items-center justify-center">

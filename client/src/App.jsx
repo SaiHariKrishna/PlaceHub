@@ -22,6 +22,7 @@ import ManageJobs from './pages/admin/ManageJobs';
 import JobForm from './pages/admin/JobForm';
 import ViewApplicants from './pages/admin/ViewApplicants';
 import AllApplicants from './pages/admin/AllApplicants';
+import AdminStudents from './pages/admin/AdminStudents';
 import ChangePassword from './pages/admin/ChangePassword';
 import AdminForgotPassword from './pages/admin/AdminForgotPassword';
 import AdminVerifyOTP from './pages/admin/AdminVerifyOTP';
@@ -67,6 +68,7 @@ function App() {
       <Route path="/admin/jobs/new" element={<AdminRoute><DashboardLayout><JobForm /></DashboardLayout></AdminRoute>} />
       <Route path="/admin/jobs/:id/edit" element={<AdminRoute><DashboardLayout><JobForm /></DashboardLayout></AdminRoute>} />
       <Route path="/admin/jobs/:id/applicants" element={<AdminRoute><DashboardLayout><ViewApplicants /></DashboardLayout></AdminRoute>} />
+      <Route path="/admin/students" element={<AdminRoute><DashboardLayout><AdminStudents /></DashboardLayout></AdminRoute>} />
       <Route path="/admin/applicants" element={<AdminRoute><DashboardLayout><AllApplicants /></DashboardLayout></AdminRoute>} />
       <Route path="/admin/change-password" element={<AdminRoute><DashboardLayout><ChangePassword /></DashboardLayout></AdminRoute>} />
     </Routes>

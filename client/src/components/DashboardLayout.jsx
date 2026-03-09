@@ -12,6 +12,7 @@ const pageTitles = {
   '/admin': 'Admin Dashboard',
   '/admin/jobs': 'Manage Jobs',
   '/admin/jobs/new': 'Create Job',
+  '/admin/students': 'Students',
   '/admin/applicants': 'All Applicants',
   '/admin/change-password': 'Settings',
 };

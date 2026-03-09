@@ -23,6 +23,7 @@ const studentLinks = [
 const adminLinks = [
   { to: '/admin', label: 'Dashboard', icon: HiOutlineChartBar },
   { to: '/admin/jobs', label: 'Manage Jobs', icon: HiOutlineBriefcase },
+  { to: '/admin/students', label: 'Students', icon: HiOutlineUser },
   { to: '/admin/applicants', label: 'Applicants', icon: HiOutlineUsers },
   { to: '/admin/change-password', label: 'Settings', icon: HiOutlineCog },
 ];
