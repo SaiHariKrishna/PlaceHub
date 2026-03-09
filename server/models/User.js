@@ -25,4 +25,13 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// TTL index: auto-delete unverified users 20 minutes after account creation
+userSchema.index(
+  { createdAt: 1 },
+  {
+    expireAfterSeconds: 1200,
+    partialFilterExpression: { isVerified: false },
+  }
+);
+
 module.exports = mongoose.model('User', userSchema);
