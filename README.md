@@ -113,7 +113,7 @@ PlaceHub
 │   │   ├── services
 │   │   └── context
 │   ├── index.html
-│   └── package.json
+│   
 │
 ├── server
 │   ├── config
@@ -222,7 +222,7 @@ Environment variables must be configured on both platforms.
 Frontend environment variable:
 
 ```
-VITE_API_URL=https://placehub-backend-3ft5.onrender.com
+VITE_API_URL=YOUR_URL
 ```
 
 Backend environment variable:
@@ -246,11 +246,8 @@ CLIENT_URL=https://placehub.me
 
 ## Author
 
-Konda Venkata Sai Hari Krishna
+Konda Venkata Sai Harikrishna
 Computer Science Engineering Student
+Woxsen University
 
 ---
-
-## License
-
-This project was built for educational purposes and academic demonstration.
