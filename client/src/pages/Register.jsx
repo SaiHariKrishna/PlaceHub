@@ -43,7 +43,7 @@ export default function Register() {
                 onChange={handleChange}
                 required
                 className="w-full input text-sm"
-                placeholder="Hari Krishna"
+                placeholder="Enter Your Name"
               />
             </div>
             <div>
