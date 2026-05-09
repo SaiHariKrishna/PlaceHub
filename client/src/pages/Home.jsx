@@ -18,10 +18,6 @@ export default function Home() {
       <section className="bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-sm font-medium mb-6 border border-blue-200">
-              <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" />
-              Woxsen University Placement Portal
-            </div>
             <h1 className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
               Your career journey
               <br />
