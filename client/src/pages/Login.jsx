@@ -80,11 +80,7 @@ export default function Login() {
           </Link>
         </p>
 
-        <p className="text-center text-sm text-slate-500 mt-2">
-          <Link to="/admin/forgot-password" className="text-slate-400 hover:text-blue-600 hover:underline">
-            Admin? Reset password here
-          </Link>
-        </p>
+        
       </div>
     </div>
   );
